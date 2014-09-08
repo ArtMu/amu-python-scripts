@@ -5,11 +5,13 @@
 
 import sys
 import time
+import os
 
 def doWeHaveTheNumInFile(num):
-    #if os.path.exists('prime_factors.txt'):
+    if not os.path.exists('prime_factors.txt'):
+        db_file = open(os.getcwd() + '/' + "prime_factors.txt", "w")
     # Open a file
-    db_file = open("prime_factors.txt", "r")
+    db_file = open(os.getcwd() + '/' + "prime_factors.txt", "r")
     found = False
     for line in db_file:
         if str(num) in line:
