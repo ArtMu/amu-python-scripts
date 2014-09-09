@@ -7,16 +7,20 @@
 # Arto Mujunen 21.05.2013
 # Version 06
 # Fixes:
-# - Same file name in different folders problem fixed, Dictionary wich collect information dont use as Key anymore the file name even counter - number.
-# - Regular Expression Pattern has bug: it matched over 32 digit lenght strings. Now this is fixed by adding "\b" in the end of pattern.
-# - Lenght of subString on line 94 get by len() - method not with fixed alue
+# - Same file name in different folders problem fixed, Dictionary which collect information don't use as Key anymore the file name even counter - number.
+# - Regular Expression Pattern has bug: it matched over 32 digit length strings. Now this is fixed by adding "\b" in the end of pattern.
+# - Length of subString on line 94 get by len() - method not with fixed value
 # - Some kind of "loose logic" thinking: break inside readlines() for - loop (line 119) in the else - branch - now fixed and removed. 
 #	This caused the program exit from for - loop in the middle of file read.
 # - Some cosmetic fixes
 # Open issues:
 # - Tool search only "port [Hexadecimal max 32 lenght]" string pairs, so no 2 spaces or tabs allowed between, "port" needs to be also lowercase.
 # - File extension is "hard coded" to search currently only ".inform" - files, easy to change as user input based so user can choose what 
-
+#
+# Arto Mujunen 09.09.2014
+# Version 07
+# Updates:
+# - File type is now given as input from user.
 
 import sys
 import os
@@ -32,18 +36,22 @@ def main():
 def dirOperations():
 	out = False
 	path = ""
-	
+
+	# count for give the order number for the file in dictionary
+	count = 0
+	file_extension = '.inform'
+		
 	portsArray = []
 	print "\n################################################################################"
-	print "File search for .inform - files"
+	print "Special tool for search 'port [32 digit length Hexa value]' - string pair"
 	print "Press < x > to exit" 
 	print "################################################################################\n"
 	while (out == False):
-		path = raw_input("Give the path: ")
-		print "You entered ", path
-		if (path == 'x'or path == 'X'):
+		input = raw_input("Give the input: ")
+		print "You entered ", input
+		if (input == 'x'or input == 'X'):
 			sys.exit(0)
-		if not os.access(path, os.W_OK):
+		if not os.access(input, os.W_OK):
 			print "Not OK Path"
 			print "Try again"
 		else:
@@ -51,13 +59,13 @@ def dirOperations():
 			out = True
 
 	# Amu: Choise if need to use input value
-	# file_extension = raw_input("Give the File Extension you want to search: ")
-	# print "You entered: ", file_extension
-
-	# count for give the order number for the file in dictionary
-	count = 0
-	file_extension = '.inform'
 	
+	temp_extension = raw_input("Give the File - type, the extension you want to search. If you give 'x' '.inform' is in use: ")
+	print "You entered: ", temp_extension
+	if not (temp_extension == 'x' or temp_extension == 'X'):
+		file_extension = temp_extension
+	
+	print "File search for %s files will start."
 	# Dictionary for all the inform - files
 	list_of_files = {}
 	
