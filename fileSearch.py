@@ -1,24 +1,11 @@
-# Python version 2.7.3
-# Arto Mujunen 11.05.2013
-# Version 03
-# Not 100% proof bug free because there hasn't had time to check all the special cases
-# Some TODOs commented in code: e.g. no exception handling, 
-# ------
-# Arto Mujunen 21.05.2013
-# Version 06
-# Fixes:
-# - Same file name in different folders problem fixed, Dictionary which collect information don't use as Key anymore the file name even counter - number.
-# - Regular Expression Pattern has bug: it matched over 32 digit length strings. Now this is fixed by adding "\b" in the end of pattern.
-# - Length of subString on line 94 get by len() - method not with fixed value
-# - Some kind of "loose logic" thinking: break inside readlines() for - loop (line 119) in the else - branch - now fixed and removed. 
-#	This caused the program exit from for - loop in the middle of file read.
-# - Some cosmetic fixes
+#!/usr/bin/env python
+#
+# Used Python version 2.7.6, OS Ubuntu 14.04 
+# Arto Mujunen 09.09.2014
 # Open issues:
 # - Tool search only "port [Hexadecimal max 32 lenght]" string pairs, so no 2 spaces or tabs allowed between, "port" needs to be also lowercase.
 # - File extension is "hard coded" to search currently only ".inform" - files, easy to change as user input based so user can choose what 
 #
-# Arto Mujunen 09.09.2014
-# Version 07
 # Updates:
 # - File type is now given as input from user.
 
@@ -36,7 +23,7 @@ def main():
 # Go through the whole file - structure under given directory and save all the founded ".inform" - files 
 # to dictionary
 def dir_operations():
-	""" xxx """
+	""" Catch User Inputs as directory and file type. """
 	out = False
 	path = ""
 	file_extension = '.inform'
@@ -95,16 +82,16 @@ def search_valid_files(file_extension, path):
 	_print_info(portsArray)	
 
 def _list_available_dirs():
-	""" xxx """
-	 # Handy one liner to save current directory's sub - dirs
+	""" Prints out all the directories inside current folder """
+	# Handy one-liner to list all directories in current directory. [1] is for folders, [2] is for files
 	dirs = os.walk('.').next()[1]
 	for dir in dirs:
 		print "Dir :" + dir
-	
-# Method read the ".inform" - file and save all the port Hexadecimal combinations
-# Return the Array (portArray) of find matches and brake if no matches
+
 def _search_from_file(file):
-	""" Helper method xxx """
+	""" Helper Method read the ".inform" - file and save all the port Hexadecimal combinations
+		Returns the Array (portArray) of find matches and brake if no matches
+	"""
 	print "\n################################################################################"
 	print "Lets seek in the folder in file: ", os.path.abspath(file)
 	print "################################################################################\n"
