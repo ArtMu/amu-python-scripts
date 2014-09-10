@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-
+#
+# Arto M 08.09.2014
 # Implemented with Python Version: 2.7.6 on Ubuntu OS.
 # Verified with windows 7 also, there shouldn't be any major problems.
 # 
