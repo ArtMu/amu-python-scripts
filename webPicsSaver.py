@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-
+#
+# Arto M 08.09.2014
 # Implemented with Python Version: 2.7.6 on Ubuntu OS.
 # Verified with windows 7 also, there shouldn't be any major problems.
 # 
@@ -15,7 +16,7 @@
 # Next info pops up if user just run command 'python webPicsSaver.py' 
 """
 Usage for the app: 
-'python WebImageFinder.py <url_to_search_images>'
+'python webPicsSaver.py <url_to_search_images>'
 URL should be in form as http://www.disney.com or www.disney.com.
 This command line - tool is for fetching and saving images from web - page.
 Images from the web - page will be saved to: current-dir/images/<domain-dir>
