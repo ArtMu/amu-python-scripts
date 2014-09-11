@@ -2,10 +2,15 @@
 #
 # Used Python version 2.7.6, OS Ubuntu 14.04 
 # Arto Mujunen 09.09.2014
-# Open issues:
-# - Tool search only "port [Hexadecimal max 32 lenght]" string pairs, so no 2 spaces or tabs allowed between, "port" needs to be also lowercase.
-# - File extension is is given by user if user choose 'x' tool uses default ".inform" - files. 
+# Issues:
+# - Tool search only "port [Hexadecimal max 32 lenght]" string pairs, so no 2 spaces or tabs allowed between, 
+#	"port" needs to be also lowercase. This can be changed (* comment in code) by using RegEx and creating 
+#	pattern = re.compile("port", re.IGNORECASE) and then substituting <if (search_word in line):> by <if(re.match(pattern, line)):>
 #
+# - File extension is is given by user if user choose 'x' tool uses default ".inform" - files. 
+# - Same file - name issue: If same name of file in different folders founded, Dictionary shouldn't use file name as keys 
+#   other vice only first founded file will be in list thats why 'count' - counter is used as key. 
+#   This use-case has been verified on TestDir/ with samename.inform files in different folders.
 
 import sys
 import os
@@ -15,12 +20,10 @@ import collections
 
 def main():
 
-	file_type, path = dir_operations()
+	file_type, path = user_inputs()
 	search_valid_files(file_type, path)
 	
-# Go through the whole file - structure under given directory and save all the founded ".inform" - files 
-# to dictionary
-def dir_operations():
+def user_inputs():
 	""" Catch User Inputs as directory and file type. """
 	out = False
 	path = ""
@@ -44,6 +47,7 @@ def dir_operations():
 			print "OK Path"
 			out = True
 	
+	# Explanation/Usage for the user inside raw_input 
 	temp_extension = raw_input("""Give the File - type, the extension you want to search.
 	If you give 'x' '.inform' - file type will be used: """)
 	print "You entered: ", temp_extension
@@ -55,7 +59,11 @@ def dir_operations():
 	return file_extension, path
 
 def search_valid_files(file_extension, path):
-	""" This method search all files from the needed file type and save them to list_of_files - dictionary. """
+	""" This method search all files from the needed file type and save them to list_of_files - dictionary. 
+		This dictionary is parsed so that all found files will be gone through within _search_from_file() 
+		method. All port values will be then extend to portsArray (extend() because we are merging 2 arrays).
+		In the end _print_info() helper method is called list the "statistics" to screen.
+	"""
 	# Dictionary for all the inform - files
 	list_of_files = {}
 	
@@ -66,13 +74,15 @@ def search_valid_files(file_extension, path):
 	ex_len = len(file_extension)
 	# Using os.walk() is the core idea of this whole script
 	# Dictionary for save all .inform files it saves Key as order number and Value as File with path
-	for (dirpath, dirnames, filenames) in os.walk(path):
+	# OPTIONAL TASK F2: os.walk argument followlinks=True allows to search under symbolic links
+	for (dirpath, dirnames, filenames) in os.walk(path, followlinks=True):
 		for filename in filenames:
-			if filename[-ex_len:] == file_extension: 
+			if filename[-ex_len:] == file_extension:
 				list_of_files[count] = os.sep.join([dirpath, filename])
 				count = count + 1
 	
-	for value, path in list_of_files.items(): # returns the dictionary as a list of value pairs -- a tuple.
+	# Parse out the port values from each file (path) 
+	for value, path in list_of_files.items():
 		# Debug
 		# print "value and path: ", value, path
 		portsArray.extend(_search_from_file(path))
@@ -80,34 +90,36 @@ def search_valid_files(file_extension, path):
 	_print_info(portsArray)	
 
 def _list_available_dirs():
-	""" Prints out all the directories inside current folder """
+	""" Local method Prints out all the directories inside current folder """
 	# Handy one-liner to list all directories in current directory. [1] is for folders, [2] is for files
 	dirs = os.walk('.').next()[1]
 	for dir in dirs:
 		print "Dir :" + dir
 
 def _search_from_file(file):
-	""" Helper Method read the ".inform" - file and save all the port Hexadecimal combinations
-		Returns the Array (portArray) of find matches and brake if no matches
+	""" Local Method read the ".inform" - file and save all the port Hexadecimal combinations
+		Returns the Array (portArray) of find matches
 	"""
 	print "\n################################################################################"
 	print "Lets seek in the folder in file: ", os.path.abspath(file)
 	print "################################################################################\n"
 	
 	portArray = []
+	search_word = 'port'	
 	
 	# Regular Expression pattern to get strings with only Hexa values and digit amount of between 4 - 32.
 	# Fix: last "\b" was lacking in the end of pattern thats why over 32 digit Hexa values were falsely matched
 	hexaPattern  = re.compile(r'\b[0-9a-fA-F]{4,32}\b') 
-	
+
 	# Add data to Array if valid string
 	with open(file) as f:
 		for line in f.readlines():
-			if ("port" in line):
+			# This check can be insensitive by using RegEx comment about that in start of the file.*
+			if (search_word in line): 
 
-				print "\'port\' - string FOUND in file!"
+				print search_word + " - string FOUND in file!"
 				
-				portStartIdx = line.rfind("port")
+				portStartIdx = line.rfind(search_word)
 				
 				# Sub-string which contains stuff after the "port" and 1 space
 				subString = line[ portStartIdx + 5 : len(line)]
@@ -117,11 +129,11 @@ def _search_from_file(file):
 				# We are interested about the first item line_after_port[0] (port's hexa value)
 				# Clean e.g. tabs and newlines form the line_after_port[0] using strip()
 				data = line_after_port[0].strip()
-					
+
 				# Check with Regular Expression pattern if string contain something else than Hexadecimal or it is too long
 				hex = re.match(hexaPattern, data)
 				if hex:
-					print "This is MATCH, proper lenght and Hexadecimal", data
+					print "This is MATCH, proper length and Hexadecimal", data
 					portArray.append(data)
 
 				else:
