@@ -32,6 +32,7 @@ def user_inputs():
 	print "\n################################################################################"
 	print "Special tool for search 'port [32 digit length Hexa value]' - string pair"
 	print "Press < x > to exit" 
+	print
 	print "Available Dir(s): "
 	_list_available_dirs()
 	print "################################################################################\n"
@@ -94,14 +95,14 @@ def _list_available_dirs():
 	# Handy one-liner to list all directories in current directory. [1] is for folders, [2] is for files
 	dirs = os.walk('.').next()[1]
 	for dir in dirs:
-		print "Dir :" + dir
+		print "Dir: " + dir
 
 def _search_from_file(file):
 	""" Local Method read the ".inform" - file and save all the port Hexadecimal combinations
 		Returns the Array (portArray) of find matches
 	"""
 	print "\n################################################################################"
-	print "Lets seek in the folder in file: ", os.path.abspath(file)
+	print "Lets seek in the file: ", os.path.abspath(file)
 	print "################################################################################\n"
 	
 	portArray = []
@@ -154,6 +155,7 @@ def _print_info(ports):
 	print "PORT:					 FREQUENCY:"
 	for portid in frq_counter:
 		sys.stdout.write("{0:<50}{1:<10}\n".format(portid, frq_counter[portid]))
+		print "----------------------------------------------------------------------"
 	print "################################################################################"
 	
 # boiler
