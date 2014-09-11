@@ -4,10 +4,8 @@
 # Arto Mujunen 09.09.2014
 # Open issues:
 # - Tool search only "port [Hexadecimal max 32 lenght]" string pairs, so no 2 spaces or tabs allowed between, "port" needs to be also lowercase.
-# - File extension is "hard coded" to search currently only ".inform" - files, easy to change as user input based so user can choose what 
+# - File extension is is given by user if user choose 'x' tool uses default ".inform" - files. 
 #
-# Updates:
-# - File type is now given as input from user.
 
 import sys
 import os
@@ -141,7 +139,7 @@ def _print_info(ports):
 
 	print "\n\n################################################################################"
 	print "			RESULTS:"
-	print "PORT:						FRQ:"
+	print "PORT:					 FREQUENCY:"
 	for portid in frq_counter:
 		sys.stdout.write("{0:<50}{1:<10}\n".format(portid, frq_counter[portid]))
 	print "################################################################################"
