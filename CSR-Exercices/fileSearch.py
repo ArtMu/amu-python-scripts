@@ -139,9 +139,6 @@ def _search_from_file(file):
 
 				else:
 					print "This is not MATCH, not Hex or too long", data
-			# Debug	
-			#else:	
-			#	print "\'port\' - string NOT FOUND in file: ", f.name
 
 	return portArray
 
