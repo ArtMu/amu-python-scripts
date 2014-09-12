@@ -13,6 +13,8 @@
 #   This use-case has been verified on TestDir/ with samename.inform files in different folders.
 #
 # - Optional issue: Search also form Symbolic link directories by using in os.walk() True for argument followlinks (line 81). 
+# - in my gitHub you find the file - structure which you can use as initial testing purposes. 
+#		Files in the structure have .inform - extension and they contains 'port' hexadecimal - string pairs spread around.    
 
 import sys
 import os
