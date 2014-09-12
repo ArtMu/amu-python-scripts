@@ -1,16 +1,20 @@
 #!/usr/bin/env python
 #
-# Used Python version 2.7.6, OS Ubuntu 14.04 
+# on work used Python version 2.7.6, OS Ubuntu 14.04 
 # Arto Mujunen 09.09.2014
-# Issues:
-# - Tool search only "port [Hexadecimal max 32 lenght]" string pairs, so no 2 spaces or tabs allowed between, 
+# Notes:
+# - Tool search only "port [Hexadecimal max 32 lenght]" string pairs, so no 2 or more spaces or tabs allowed between, 
 #	"port" needs to be also lowercase. This can be changed (* comment in code) by using RegEx and creating 
 #	pattern = re.compile("port", re.IGNORECASE) and then substituting <if (search_word in line):> by <if(re.match(pattern, line)):>
 #
-# - File extension is is given by user if user choose 'x' tool uses default ".inform" - files. 
+# - The os.walk() - method is the core for the whole tool. It goes top to down (as default) the directory tree.
+#	It returns in every level 3 tuples: dir-path (1 value), dir-names and file-names 
+# - File extension is given by user if user choose 'x' tool uses default ".inform" - files. 
 # - Same file - name issue: If same name of file in different folders founded, Dictionary shouldn't use file name as keys 
-#   other vice only first founded file will be in list thats why 'count' - counter is used as key. 
+#   other vice only first founded file will be in list thats why 'count' - counter is used as key (line 86). 
 #   This use-case has been verified on TestDir/ with samename.inform files in different folders.
+#
+# - Optional task done (sub-dictionary as Symbolic link) by using in os.walk() True for argument followlinks (line 81). 
 
 import sys
 import os
@@ -54,7 +58,7 @@ def user_inputs():
 	print "You entered: ", temp_extension
 	if not (temp_extension == 'x' or temp_extension == 'X'):
 		file_extension = temp_extension
-	
+
 	print "File search for << %s >> files will start." %(file_extension)
 
 	return file_extension, path
@@ -84,8 +88,8 @@ def search_valid_files(file_extension, path):
 	
 	# Parse out the port values from each file (path) 
 	for value, path in list_of_files.items():
-		# Debug
-		# print "value and path: ", value, path
+
+		# .extend because we are "merging" 2 arrays
 		portsArray.extend(_search_from_file(path))
 	
 	_print_info(portsArray)	
@@ -109,7 +113,6 @@ def _search_from_file(file):
 	search_word = 'port'	
 	
 	# Regular Expression pattern to get strings with only Hexa values and digit amount of between 4 - 32.
-	# Fix: last "\b" was lacking in the end of pattern thats why over 32 digit Hexa values were falsely matched
 	hexaPattern  = re.compile(r'\b[0-9a-fA-F]{4,32}\b') 
 
 	# Add data to Array if valid string
