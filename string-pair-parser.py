@@ -4,7 +4,7 @@
 # Arto Mujunen 09.09.2014
 # Notes:
 # - Tool search "[eg. port/value/item] [Hexadecimal value]" string pairs, it allows only 1 space between strings. 
-#
+#		It asks the first string value and max and min length of Hexa value from user as a start.
 # - The os.walk() - method is the core for the whole tool. It goes top to down (as default) the directory tree.
 #	It returns in every level 3 tuples: dir-path (1 value), dir-names and file-names 
 # - File extension is given by user if user choose 'x' tool uses default ".inform" - files. 
