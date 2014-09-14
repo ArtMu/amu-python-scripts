@@ -15,7 +15,7 @@
 # - Search can be done more flexible way, user can choose the pattern for second string 
 #     or search only for 1 string etc ..  
 
-import stringParser
+import searchEngine
 import sys
 import collections
 import wx
@@ -53,7 +53,7 @@ class StrFrequentCounter(wx.Panel):
                 
         # Available directories Combo-box Control
         self.quote5 = wx.StaticText(self, label="Founded Directories:", pos=(350, 200))
-        self.sampleList = stringParser.parser().list_available_dirs()
+        self.sampleList = searchEngine.parser().list_available_dirs()
         self.edithear = wx.ComboBox(self, pos=(350, 220), size=(95, -1), choices=self.sampleList, style=wx.CB_DROPDOWN)
         #self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.edithear)
    
@@ -69,7 +69,7 @@ class StrFrequentCounter(wx.Panel):
         max_len = self.textBoxMaxLen.GetValue()
         
         print "## first_str: " + first_str
-        arr = stringParser.parser().search_valid_files(suffix, first_str, path, min_len, max_len)
+        arr = searchEngine.parser().search_valid_files(suffix, first_str, path, min_len, max_len)
         self.write_results(arr)
 
     def ExitApp(self, event):
