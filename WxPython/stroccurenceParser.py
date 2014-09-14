@@ -5,9 +5,13 @@
 # Last one's length is specified by user.
 # User can specify also the first string, suffix of the file. Tool will report findings 
 #    as a content of found strings and the number of occurene of this specific string. 
-# With small modifications to the script search can be done more flexible way, user can choose the pattern for second string 
-#     or search only for 1 string etc ..
-  
+
+# With small modifications to the script more functionality could be added in future: 
+# - If user press specific founded string on list tool could list all the
+#     files on different list which contain the specific string.
+# - Search can be done more flexible way, user can choose the pattern for second string 
+#     or search only for 1 string etc ..  
+
 import stringParser
 import sys
 import collections
