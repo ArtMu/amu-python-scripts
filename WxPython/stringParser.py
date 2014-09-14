@@ -22,7 +22,7 @@ import os.path
 import re
 import collections
 
-global min_len, max_len, first_arg
+#global min_len, max_len, first_arg
 
 global hexaPattern
 
@@ -72,7 +72,7 @@ class parser():
 	
 		return file_extension, path
 	
-	def search_valid_files(self, file_extension, path, min_len=4, max_len=32):
+	def search_valid_files(self, file_extension, first_str, path, min_len=4, max_len=32):
 		""" This method search all files from the needed file type and save them to list_of_files - dictionary. 
 			This dictionary is parsed so that all found files will be gone through within _search_from_file() 
 			method. All port values will be then extend to portsArray (extend() because we are merging 2 arrays).
@@ -80,8 +80,8 @@ class parser():
 		"""
 		# Dictionary for all the inform - files
 		list_of_files = {}
-		
 		portsArray = []
+		
 		# count for give the order number for the file in dictionary
 		count = 0
 		# Length of file extension used inside next for - loop to check validity of file type (extension length can vary)
@@ -99,7 +99,7 @@ class parser():
 		for value, path in list_of_files.items():
 	
 			# .extend because we are "merging" 2 arrays
-			portsArray.extend(self._search_from_file(path, min_len, max_len))
+			portsArray.extend(self._search_from_file(path, first_str, min_len, max_len))
 		
 		#self._print_info(portsArray)	
 		return portsArray
@@ -112,7 +112,7 @@ class parser():
 			print "Dir: " + dir
 		return dirs
 		
-	def _search_from_file(self, path, min_len, max_len):
+	def _search_from_file(self, path, first_str, min_len, max_len):
 		""" Local Method read the ".inform" - file and save all the port Hexadecimal combinations
 			Returns the Array (portArray) of find matches
 		"""
@@ -120,17 +120,14 @@ class parser():
 		print "Lets seek in the file: ", os.path.abspath(path)
 		print "################################################################################\n"
 		
-		#global hexaPattern, min_len, max_len, first_arg
+		#global hexaPattern, min_len, max_len, first_str
 		
 		portArray = []
 		
-		# TODO these as arguments from UI
-		search_word = 'port' #first_arg
-	#	min_len = 4
-#		max_len = 32
-		
+		# Arguments from UI
+		search_word = first_str
+
 		# Regular Expression pattern to get strings with only Hexa values and digit amount of between 4 - 32.
-		 
 		hexaPattern  = re.compile(r'\b[0-9a-fA-F]{%s,%s}\b' %(min_len, max_len))
 		# Add data to Array if valid string
 		with open(path) as f:
