@@ -13,7 +13,7 @@ Library urllib2 is used for HTTP operations and for get images.
 Fetching images from chosen site will create new sub-folder based on domain name (location for pics: So pics are saved under current-dir/images/<domain-name-dir>.
 User gives as argument the web - page from where he/she wants to save the images.
 
-- In WxPython/ folder you will found GUI version of string-pair-parser.py
+- In WxPython/ folder you will found GUI version of previous string-pair-parser.py
 You will need WxPython 3rd party lib for that one and also directory for 
 put the tool on work located under the script's location.
 
