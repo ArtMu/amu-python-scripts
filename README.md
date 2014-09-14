@@ -10,7 +10,8 @@ More info about PF: http://en.wikipedia.org/wiki/Prime_factor
     parsing HTML page for image URLs and verifying URL format are based on RegEx. 
     In that way it is possible to optimize a bit and keep code more readable. 
 Library urllib2 is used for HTTP operations and for get images.
-Fetching images from chosen site will create new sub-folder based on domain name (location for pics: So pics are saved under current-dir/images/<domain-name-dir>
+Fetching images from chosen site will create new sub-folder based on domain name (location for pics: So pics are saved under current-dir/images/<domain-name-dir>.
+User gives as argument the web - page from where he/she wants to save the images.
 
 - In WxPython/ folder you will found GUI version of string-pair-parser.py
 You will need WxPython 3rd party lib for that one and also directory for 
