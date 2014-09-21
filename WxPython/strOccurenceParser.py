@@ -16,6 +16,7 @@
 #     or search only for 1 string etc ..  
 
 import searchEngine
+import os
 import sys
 import collections
 import wx
@@ -24,6 +25,8 @@ class StrFrequentCounter(wx.Panel):
     def __init__(self, parent, *args, **kwargs):
         wx.Panel.__init__(self, parent, *args, **kwargs)
 
+        self.directory = None
+        
         self.quote0 = wx.StaticText(self, label="Tool which search the frequency of string pairs inside given dir - structure", style=3, pos=(50, 5))
         self.quote1 = wx.StaticText(self, label="Founded Strings:        Frequency of the strings:", pos=(5, 30))
 
@@ -34,7 +37,14 @@ class StrFrequentCounter(wx.Panel):
         self.QuitButton = wx.Button(self, label='Quit', pos=(435, 325))
         self.Bind(wx.EVT_BUTTON, self.ExitApp, self.QuitButton)
         
-        # Textboxes
+        # open Browser button
+        self.browserButton = wx.Button(self, label='Open browser', pos=(350, 200))
+        self.Bind(wx.EVT_BUTTON, self.open_browser, self.browserButton)    
+        
+        # File browser
+        self.dialog = wx.DirDialog(self, message="Browse file", defaultPath=os.getcwd(), pos=(350, 200))
+        
+        # Text-boxes
         self.textBox = wx.TextCtrl(self, pos=(5, 50), size=(270, 450), style = wx.TE_MULTILINE)
         self.textBoxFrq = wx.TextCtrl(self, pos=(280, 50), size=(40, 450), style = wx.TE_MULTILINE)
         
@@ -52,17 +62,20 @@ class StrFrequentCounter(wx.Panel):
         self.textBoxMaxLen = wx.TextCtrl(self, pos=(350, 175), value = "32", size=(70, 25))
                 
         # Available directories Combo-box Control
-        self.quote5 = wx.StaticText(self, label="Founded Directories:", pos=(350, 200))
-        self.sampleList = searchEngine.parser().list_available_dirs()
-        self.edithear = wx.ComboBox(self, pos=(350, 220), size=(95, -1), choices=self.sampleList, style=wx.CB_DROPDOWN)
+        #self.quote5 = wx.StaticText(self, label="Founded Directories:", pos=(350, 200))
+        #self.sampleList = searchEngine.parser().list_available_dirs()
+        #self.edithear = wx.ComboBox(self, pos=(350, 220), size=(95, -1), choices=self.sampleList, style=wx.CB_DROPDOWN)
         #self.Bind(wx.EVT_COMBOBOX, self.EvtComboBox, self.edithear)
    
         # These 2 are mandatory, can't draw the frame without
         Sizer = wx.BoxSizer(wx.VERTICAL)
         self.SetSizerAndFit(Sizer)
     
-    def start_search(self, event):
-        path = self.edithear.GetValue()
+    # TODOs for all methods, error handling (event argument)
+    def start_search(self, path):
+        #path = self.edithear.GetValue()
+        path = self.directory
+        print "## path " + path
         suffix = self.textBoxFileType.GetValue()
         first_str = self.textBoxFirstStr.GetValue()
         min_len = self.textBoxMinLen.GetValue()
@@ -86,7 +99,18 @@ class StrFrequentCounter(wx.Panel):
             self.textBox.WriteText(id + "\n")
             self.textBoxFrq.WriteText(str((frq_counter[id]))+"\n")
             count += 1
-            
+    
+    def open_browser(self, event):
+        # TODO glumsy way to check if DirDialog is deleted
+        if str(self.dialog).find('DirDialog'):
+            self.dialog = wx.DirDialog(self, message="Browse file", defaultPath=os.getcwd(), pos=(350, 200))
+            print "## alive again ##"
+        if self.dialog.ShowModal() == wx.ID_OK:
+            self.directory = self.dialog.GetPath()
+            print "### path2: " + self.directory
+        self.dialog.Destroy()
+        #self.start_search(path)
+        
     def print_colors(self, count):
         if (count % 2) == 1:
             self.textBox.SetDefaultStyle(wx.TextAttr(wx.RED))
