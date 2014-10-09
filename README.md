@@ -16,6 +16,7 @@ User gives as argument the web - page from where he/she wants to save the images
 - string-pair-parser.py script is made for special use for parsing out "port [Hexadecimal max 32 lenght]" string pairs inside given Directory recursively. Currently it search only indside inform - files. v
 It will report on the end all the found matched strings and the number of occurences.
 This can be base for some parser which need this kind of functionality.
+You can verify this functionlity by using the file structure I have included in my Repo.
 
 - In WxPython/ folder you will found GUI version of next command line version: string-pair-parser.py
 You will need WxPython 3rd party lib for that one and also directory for 
