@@ -23,5 +23,3 @@ You will need WxPython 3rd party lib for that one and also directory for
 put the tool on work located under the script's location.
 In this real GUI user can influence lot more what we are parsing than in command line tool. 
 For this one you need to have WxPython Lib installed (2.8 version was suitable for Ubuntu 14.04, the 3.0 has some iisues)
-Also currently you need to have the UI script and the searchEngine py:s in same folder as the Directory you want to parse.
-Change come soon, i will add File - Browser so itrs easy to start the sseartch what ever folder. 
