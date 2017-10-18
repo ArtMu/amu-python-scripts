@@ -1,6 +1,7 @@
 
 # 06.07.2013 Arto Mujunen
 # Tool to get Prime Factor values out from given number
+# Results hve been saved to text file prime_factors.txt, so calculating same number again it will be picked from file.
 # More info: http://en.wikipedia.org/wiki/Prime_factor
 
 import sys
@@ -16,7 +17,8 @@ def doWeHaveTheNumInFile(num):
     for line in db_file:
         if str(num) in line:
             found = True
-            # Debug: print "Line: ", line
+            # Debug:
+            print "Line: ", line
             break
     
     # Close opened file
@@ -44,9 +46,11 @@ def all_prime_factors(n):
                 factors.append(d)
                 old_value = d
                 n /= d
+            else:
+                n /= d
         # DEBUG
-        if(d / 10000 == 1):
-            print "N VALUE: ", n, "D value: ", d
+    #    if (d / 10000 == 1):
+    #        print "N VALUE: ", n, "D value: ", d
         d = d + 1
         animation_counter = animation_counter + 1
     return factors
