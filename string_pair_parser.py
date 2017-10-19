@@ -3,7 +3,7 @@
 # Python version 2.7.6, OS Ubuntu 14.04
 # Arto Mujunen 09.09.2014
 # Notes:
-# - This is command line version of WxPython/strOccurenceParser.py GUI script version!!!
+# - This is command line version of StringPairParser/strOccurenceParser.py GUI script version!!!
 # - Idea is to find "key - value" pairs from given file types in file system, e.g. "port HE2243DF12"
 # - Tool search based on user input
 #       e.g: "[port/value/item] [Hexadecimal value]" string pairs, it allows only 1 space between strings.
