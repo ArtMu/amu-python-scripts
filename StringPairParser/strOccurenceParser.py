@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # 13.09.2014 Arto M
-# You need 3rd party library WxPython for get this working, in Ubuntu 14.04: 
+# You need 3rd party library StringPairParser for get this working, in Ubuntu 14.04:
 #    use command: sudo apt-get install python-wxgtk2.8 (version 3.0 has some issues)
 #
 # Currently tool search string pairs: [port/addre/mac/etc..] 1 space [Hexadecimal string]
