@@ -1,20 +1,4 @@
 #!/usr/bin/env python
-#
-# on work used Python version 2.7.6, OS Ubuntu 14.04 
-# Arto Mujunen 09.09.2014
-# Notes:
-# - Tool search "[eg. port/value/item] [Hexadecimal value]" string pairs, it allows only 1 space between strings. 
-#		It asks the first string value and max and min length of Hexa value from user as a start.
-# - The os.walk() - method is the core for the whole tool. It goes top to down (as default) the directory tree.
-#	It returns in every level 3 tuples: dir-path (1 value), dir-names and file-names 
-# - File extension is given by user if user choose 'x' tool uses default ".inform" - files. 
-# - Same file - name issue: If same name of file in different folders founded, Dictionary shouldn't use file name as keys 
-#   other vice only first founded file will be in list thats why 'count' - counter is used as key (line 86). 
-#   This use-case has been verified on TestDir/ with samename.inform files in different folders.
-#
-# - Optional issue: Search also form Symbolic link directories by using in os.walk() True for argument followlinks (line 81). 
-# - in my gitHub you find the file - structure which you can use as initial testing purposes. 
-#		Files in the structure have .inform - extension and they contains 'port' hexadecimal - string pairs spread around.    
 
 import sys
 import time
