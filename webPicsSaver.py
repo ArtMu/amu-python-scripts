@@ -40,7 +40,7 @@ glob_image_pattern = '([^\s]+(\.(?i)|(jpg|png|gif|bmp|=\d{2,6})))'
 
 # This pattern expect URL which contains in the start the 'www' part name of domain (alphabets A-z and digits) 
 # suffixes can be add later currently used those 5.
-glob_www_pattern = '((www)\.([a-zA-Z0-9]+)\.(com|org|net|tv|gov|fi)$)'
+glob_www_pattern = '((www)\.([a-zA-Z0-9]+)\.(com|org|net|tv|gov|fi|se)$)'
 
 def valid_address(input):
     """ Checking the validity of given URL. """
