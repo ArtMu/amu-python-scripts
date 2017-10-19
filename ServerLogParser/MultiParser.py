@@ -13,12 +13,13 @@ import TimeWindow
 import os
 import sys
 import wx
- 
+
 class UiCreator(wx.Panel):
     def __init__(self, parent, *args, **kwargs):
         
         wx.Panel.__init__(self, parent, *args, **kwargs)
-
+        
+        VERTICAL_ALIGNMENT_ON_RIGHT_SIDE = 950;
         self.directory = None
         
         self.quote0 = wx.StaticText(self, label="Tool which search log - lines starting of the defined search word.", style=3, pos=(50, 5))
@@ -30,50 +31,58 @@ class UiCreator(wx.Panel):
         self.textBoxTimeFrameEnd = wx.TextCtrl(self, pos=(550, 25), style=wx.TE_CENTRE, value = "hr:min:sec", size=(80, 25))
 
         ###### Buttons #######
-        self.SearchButton = wx.Button(self, label="Parse", pos=(950, 325))
+        # Start SSH connection
+        self.sshLoginButton = wx.Button(self, label='SSH', pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 285))
+        self.Bind(wx.EVT_BUTTON, self.ssh_connection, self.sshLoginButton)
+
+        self.SearchButton = wx.Button(self, label="Parse", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 310))
         self.Bind(wx.EVT_BUTTON, self.start_search, self.SearchButton)
         
-        self.QuitButton = wx.Button(self, label='Quit', pos=(950, 325))
+        self.QuitButton = wx.Button(self, label='Quit', pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 335))
         self.Bind(wx.EVT_BUTTON, self.ExitApp, self.QuitButton)
         
-        # Start SSH connection
-        self.sshLoginButton = wx.Button(self, label='SSH', pos=(950, 290))
-        self.Bind(wx.EVT_BUTTON, self.ssh_connection, self.sshLoginButton)    
-        
         # File browser
-        self.dialog = wx.DirDialog(self, message="Browse file", defaultPath=os.getcwd(), pos=(950, 200))
+        self.dialog = wx.DirDialog(self, message="Browse file", defaultPath=os.getcwd(),
+                                   pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 200))
         
         ##### Parsed log - file Text-box #####
         self.textBox = wx.TextCtrl(self, pos=(5, 50), size=(900, 700), style = wx.TE_MULTILINE)
         
         # Input text-boxes where user can add values
-        self.quoteUsername = wx.StaticText(self, label="Username:", pos=(950, 40))
-        self.textBoxUsername = wx.TextCtrl(self, pos=(950, 55), value = "admartmuj", size=(180, 25))
+        self.quoteUsername = wx.StaticText(self, label="Username:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 40))
+        self.textBoxUsername = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 55),
+                                           value = "admartmuj", size=(180, 25))
  
-        self.quotePassword = wx.StaticText(self, label="Password", pos=(950, 80))
-        self.textBoxPassword = wx.TextCtrl(self, style=wx.TE_PASSWORD, pos=(950, 95), value = "KlAp4001", size=(180, 25))
+        self.quotePassword = wx.StaticText(self, label="Password", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 80))
+        self.textBoxPassword = wx.TextCtrl(self, style=wx.TE_PASSWORD, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 95),
+                                           value = "KlAp4001", size=(180, 25))
  
-        self.quote3 = wx.StaticText(self, label="String to search", pos=(950, 120))
-        self.textBoxParseString = wx.TextCtrl(self, pos=(950, 135), value = "ERROR", size=(180, 25))
+        self.quote3 = wx.StaticText(self, label="String to search", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 120))
+        self.textBoxParseString = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 135),
+                                              value = "ERROR", size=(180, 25))
 
-        self.quote4 = wx.StaticText(self, label="Server node:", pos=(950, 160))
-        self.textBoxNodeUrl = wx.TextCtrl(self, pos=(950, 175), value = "stb-sit-itas-adp01.nix.cydmodule.com", size=(180, 25))
+        self.quote4 = wx.StaticText(self, label="Server node:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 160))
+        self.textBoxNodeUrl = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 175),
+                                          value = "stb-sit-itas-adp01.nix.cydmodule.com", size=(180, 25))
                 
-        self.numberOfLines = wx.StaticText(self, label="Amount of lines after match:", pos=(950, 200))
-        self.textBoxAmountOfLines = wx.TextCtrl(self, pos=(950, 215), value = "10", size=(180, 25))
+        self.numberOfLines = wx.StaticText(self, label="Amount of lines after match:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 200))
+        self.textBoxAmountOfLines = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 215),
+                                                value = "10", size=(180, 25))
   
-        self.startAndEndTimes = wx.StaticText(self, label="Start time delay.    End time delay: (minutes)", pos=(950, 240))
-        self.textBoxTimeStampS = wx.TextCtrl(self, pos=(950, 255), value = "0", size=(50, 25))
+        self.startAndEndTimes = wx.StaticText(self, label="Start time delay.    End time delay: (minutes)", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 240))
+        self.textBoxTimeStampS = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 255),
+                                             value = "0", size=(50, 25))
         self.textBoxTimeStampE = wx.TextCtrl(self, pos=(1050, 255), value = "0", size=(50, 25))
         
         #### ERROR statistics - list - table - first labels #####
-        self.errorStatsLabel = wx.StaticText(self, label="Amount of Errors:", pos=(950, 360))
-        self.errorStatsLabel = wx.StaticText(self, label="FRQ in %:     List of Errors:", pos=(950, 380))
+        self.errorStatsLabel = wx.StaticText(self, label="Amount of Errors:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 360))
+        self.errorStatsLabel = wx.StaticText(self, label="FRQ in %:     List of Errors:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 380))
         
         self.errorAmountTextBox = wx.TextCtrl(self, pos=(1060, 355), value = "0", size=(50, 25))
         self.errorStatisticsTextBox = wx.TextCtrl(self, pos=(1012, 400), size=(270, 220), style = wx.TE_MULTILINE|wx.HSCROLL)
         #### ERROR statistics - frequency of ERROR type #####
-        self.errorFrequencyTextBox = wx.TextCtrl(self, pos=(950, 400), size=(60, 220), style = wx.TE_MULTILINE)
+        self.errorFrequencyTextBox = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 400),
+                                                 size=(60, 220), style = wx.TE_MULTILINE)
         
         # Available directories Combo-box Control
         #self.quote5 = wx.StaticText(self, label="Founded Directories:", pos=(350, 200))
