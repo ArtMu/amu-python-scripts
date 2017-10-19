@@ -3,7 +3,7 @@
 # Purpose is to have fast way to see server log issues on the left textfield.
 # By giving inputs as:
 # - search word: e.g. "Fail" of "ERROR"
-# - Server node: your IP or domain name fro server
+# - Server node: your IP or domain name for server
 # - Amount of lines after match: how many trace of lines the left textfield will show after the matched search word
 # - start time delay: how many minutes back in history from current moment
 # - end time delay: This is not implemented yet
@@ -51,11 +51,11 @@ class UiCreator(wx.Panel):
         # Input text-boxes where user can add values
         self.quoteUsername = wx.StaticText(self, label="Username:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 40))
         self.textBoxUsername = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 55),
-                                           value = "admartmuj", size=(180, 25))
+                                           value = "your-username", size=(180, 25))
  
         self.quotePassword = wx.StaticText(self, label="Password", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 80))
         self.textBoxPassword = wx.TextCtrl(self, style=wx.TE_PASSWORD, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 95),
-                                           value = "KlAp4001", size=(180, 25))
+                                           value = "your-password", size=(180, 25))
  
         self.quote3 = wx.StaticText(self, label="String to search", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 120))
         self.textBoxParseString = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 135),
@@ -75,7 +75,7 @@ class UiCreator(wx.Panel):
         self.textBoxTimeStampE = wx.TextCtrl(self, pos=(1050, 255), value = "0", size=(50, 25))
         
         #### ERROR statistics - list - table - first labels #####
-        self.errorStatsLabel = wx.StaticText(self, label="Amount of Errors:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 360))
+        self.errorStatsLabel = wx.StaticText(self, label="Amount of Matches:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 360))
         self.errorStatsLabel = wx.StaticText(self, label="FRQ in %:     List of Errors:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 380))
         
         self.errorAmountTextBox = wx.TextCtrl(self, pos=(1060, 355), value = "0", size=(50, 25))
