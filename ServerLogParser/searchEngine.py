@@ -21,20 +21,22 @@ class parser():
 	def create_log(self, start, end):
 		
 		print "### Creating temporally log, start timestamp: " + start
-		self.client.exec_command("awk '$0 > \"" + start + "\"' /var/log/jbossas/standalone/server.log > timeWindowTempLogFile")
+		self.client.exec_command("awk '$0 > \"" + start + "\"' /var/log/jbossas/standalone/server.log > "
+														  "timeWindowTempLogFile")
 		time.sleep(2)
 		
 	def parse_logfile(self, search_word, lines):
 		(stdin, stdout, stderr) = self.client.exec_command("grep -A " + lines + 
-														" --group-separator'=====================================================================' " 
-														+ search_word + " timeWindowTempLogFile")
+						" --group-separator'=====================================================================' "
+						+ search_word + " timeWindowTempLogFile")
 		
 		result = stdout.read()
 		# DEBUG print "### STDOUT result " + result
 		return result
 		
 	def latest_timestamp(self):
-		(stdin, stdout, stderr) = self.client.exec_command("tail -n 1 /var/log/jbossas/standalone/server.log|grep -o '[0-2][0-9]:[0-5][0-9]:[0-5][0-9]'")	
+		(stdin, stdout, stderr) = \
+			self.client.exec_command("tail -n 1 /var/log/jbossas/standalone/server.log|grep -o '[0-2][0-9]:[0-5][0-9]:[0-5][0-9]'")
 		latest = stdout.read()
 		print "### Latest " + latest
 		return latest
