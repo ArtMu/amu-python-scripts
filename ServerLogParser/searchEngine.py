@@ -18,11 +18,11 @@ class parser():
 		self.client.set_missing_host_key_policy(ssh.WarningPolicy())
 		self.count = None
 	
-	def create_log(self, start, end):
+	def create_log(self, start, path, end):
 		
 		print "### Creating temporally log, start timestamp: " + start
-		self.client.exec_command("awk '$0 > \"" + start + "\"' /var/log/jbossas/standalone/server.log > "
-														  "timeWindowTempLogFile")
+		print "####### awk '$0 > \"" + start + "\"' " + path + " > timeWindowTempLogFile"
+		self.client.exec_command("awk '$0 > \"" + start + "\"' " + path + " > timeWindowTempLogFile")
 		time.sleep(2)
 		
 	def parse_logfile(self, search_word, lines):
@@ -34,9 +34,10 @@ class parser():
 		# DEBUG print "### STDOUT result " + result
 		return result
 		
-	def latest_timestamp(self):
+	def latest_timestamp(self, path):
 		(stdin, stdout, stderr) = \
-			self.client.exec_command("tail -n 1 /var/log/jbossas/standalone/server.log|grep -o '[0-2][0-9]:[0-5][0-9]:[0-5][0-9]'")
+			self.client.exec_command(
+				"tail -n 1 /var/log/tuned/tuned.log|grep -o '[0-2][0-9]:[0-5][0-9]:[0-5][0-9]'")
 		latest = stdout.read()
 		print "### Latest " + latest
 		return latest

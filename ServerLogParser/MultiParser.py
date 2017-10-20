@@ -49,30 +49,35 @@ class UiCreator(wx.Panel):
         self.textBox = wx.TextCtrl(self, pos=(5, 50), size=(900, 700), style = wx.TE_MULTILINE)
         
         # Input text-boxes where user can add values
-        self.quoteUsername = wx.StaticText(self, label="Username:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 40))
-        self.textBoxUsername = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 55),
+        self.quoteUsername = wx.StaticText(self, label="Username:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 5))
+        self.textBoxUsername = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 20),
                                            value = "your-username", size=(180, 25))
  
-        self.quotePassword = wx.StaticText(self, label="Password", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 80))
-        self.textBoxPassword = wx.TextCtrl(self, style=wx.TE_PASSWORD, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 95),
+        self.quotePassword = wx.StaticText(self, label="Password", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 45))
+        self.textBoxPassword = wx.TextCtrl(self, style=wx.TE_PASSWORD, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 60),
                                            value = "your-password", size=(180, 25))
  
-        self.quote3 = wx.StaticText(self, label="String to search", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 120))
-        self.textBoxParseString = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 135),
+        self.quote3 = wx.StaticText(self, label="String to search", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 85))
+        self.textBoxParseString = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 100),
                                               value = "ERROR", size=(180, 25))
 
-        self.quote4 = wx.StaticText(self, label="Server node:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 160))
-        self.textBoxNodeUrl = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 175),
-                                          value = "stb-sit-itas-adp01.nix.cydmodule.com", size=(180, 25))
+        self.quote4 = wx.StaticText(self, label="Server node:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 125))
+        self.textBoxNodeUrl = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 140),
+                                          value = "your-server-node", size=(180, 25))
                 
-        self.numberOfLines = wx.StaticText(self, label="Amount of lines after match:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 200))
-        self.textBoxAmountOfLines = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 215),
+        self.numberOfLines = wx.StaticText(self, label="Amount of lines after match:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 165))
+        self.textBoxAmountOfLines = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 180),
                                                 value = "10", size=(180, 25))
+
+        wx.StaticText(self, label="Log file with Path:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 205))
+        self.textBoxLogFilePath = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 220),
+                                                value="your-logfile-with-path", size=(180, 25))
   
-        self.startAndEndTimes = wx.StaticText(self, label="Start time delay.    End time delay: (minutes)", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 240))
-        self.textBoxTimeStampS = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 255),
+        self.startAndEndTimes = wx.StaticText(self, label="Start time delay.    End time delay: (minutes)",
+                                              pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 245))
+        self.textBoxTimeStampS = wx.TextCtrl(self, pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 260),
                                              value = "0", size=(50, 25))
-        self.textBoxTimeStampE = wx.TextCtrl(self, pos=(1050, 255), value = "0", size=(50, 25))
+        self.textBoxTimeStampE = wx.TextCtrl(self, pos=(1050, 260), value = "0", size=(50, 25))
         
         #### ERROR statistics - list - table - first labels #####
         self.errorStatsLabel = wx.StaticText(self, label="Amount of Matches:", pos=(VERTICAL_ALIGNMENT_ON_RIGHT_SIDE, 360))
@@ -113,11 +118,11 @@ class UiCreator(wx.Panel):
         startTimeStamp = self.timeWindow.create_timeframe()
         
         # TODO: if latest is None or '0' we get latest on the server.log. Otherwise we pick it from textbox!!!
-        latestTimestamp = self.se.latest_timestamp()
+        latestTimestamp = self.se.latest_timestamp(self.textBoxLogFilePath.GetValue())
         self.writeTimeFrame(startTimeStamp, latestTimestamp)
         
         # Create time-frame log, TODO currently endTimestamp is None = latest trace on the log file
-        self.se.create_log(startTimeStamp, None)
+        self.se.create_log(startTimeStamp, self.textBoxLogFilePath.GetValue(), None)
         print "### SEARCH .... "
         parseString = self.textBoxParseString.GetValue()
         lines = self.textBoxAmountOfLines.GetValue()
